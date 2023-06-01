@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --panel-height: 600px;
+    --panel-width: 300px;
+    --panel-padding: 20px;
+    /* Colors: background */
+    --canvas: 105 7% 11%;
+    --primary: 336 80% 58%;
+    --muted: 108 6% 17%;
+    --primary-accent: 81 70% 44%;
+    /* Colors: text color  */
+    --on-canvas: 120 6% 93%;
+    --on-primary: 105 7% 11%;
+    --on-primary-muted: 336 63% 31%;
+    --on-muted: 113 5% 62%;
+    --subtle: 113 5% 62%;
+  }
+  html {
+    width: var(--panel-width);
+    /*height: min-content;*/
+  }
+  body {
+    @apply h-full w-full bg-canvas text-on-canvas;
+  }
+}
