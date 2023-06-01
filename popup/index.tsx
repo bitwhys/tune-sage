@@ -45,12 +45,6 @@ const AppHeader = () => (
   </header>
 )
 
-// const resp = await sendToBackground({
-//   name: "ping",
-//   body: {
-//     id: 123
-//   }
-// })
 // console.log(resp)
 function PopupPanel() {
   const videoId = useVideoId()

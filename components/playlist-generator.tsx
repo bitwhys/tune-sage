@@ -6,6 +6,7 @@ import ChipGroup from "~components/chip-group"
 import { getVideoDetails, type VideoDetails } from "~lib/youtube"
 import * as Popover from "@radix-ui/react-popover"
 import Chip from "~components/chip"
+import { sendToBackground } from "@plasmohq/messaging"
 
 export type PlaylistGeneratorProps = {
   videoId: string
@@ -65,7 +66,7 @@ const moods = [
   }
 ]
 const PlaylistGenerator = ({ videoId }: PlaylistGeneratorProps) => {
-  const [details, setDetails] = useState<VideoDetails>({})
+  const [details, setDetails] = useState<VideoDetails>({} as VideoDetails)
   const [similarityScore, setSimilarityScore] = useState(2)
   const [activeMoods, setActiveMoods] = useState([
     MoodModifiers.Calm,
@@ -80,7 +81,16 @@ const PlaylistGenerator = ({ videoId }: PlaylistGeneratorProps) => {
   function handleRemoveMoodModifier(mood: string) {
     setActiveMoods((v) => v.filter((m) => m !== mood))
   }
-  const pingWorker = () => {}
+  const generatePlaylist = () => {
+    sendToBackground({
+      name: "generatePlaylist",
+      body: {
+        videoId: details.id
+      }
+    }).then((resp) => {
+      console.log(resp)
+    })
+  }
   useEffect(() => {
     getVideoDetails(videoId).then((data) => {
       setDetails(data)
@@ -114,7 +124,7 @@ const PlaylistGenerator = ({ videoId }: PlaylistGeneratorProps) => {
             </p>
           </div>
           <button
-            onClick={pingWorker}
+            onClick={generatePlaylist}
             type="button"
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-transparent text-neutral-10
             hover:bg-neutral-5 hover:text-on-canvas focus:outline-none">
